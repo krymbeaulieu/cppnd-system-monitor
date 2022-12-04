@@ -61,7 +61,7 @@ vector<int> LinuxParser::Pids() {
       string filename(file->d_name);
       if (std::all_of(filename.begin(), filename.end(), isdigit)) {
         int pid = stoi(filename);
-        pids.push_back(pid);
+        pids.emplace_back(pid);
       }
     }
   }
@@ -103,24 +103,6 @@ long LinuxParser::UpTime() {
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { 
-  // long jiffies{0};
-  // vector<string> vals{CpuUtilization()};
-  // string line, key, val;
-  // std::ifstream stream(kProcDirectory + kStatFilename);
-  // if (stream.is_open()) {
-  //   std::getline(stream,line);
-  //   std::istringstream linestream(line);
-  //   linestream >> key; //cpu #
-  //   for(int i=0; i<10; i++){
-  //     //CPUStates: usr, nice, sys, idle, iowait, irq, softirq, steal, guest, guest_nice
-  //     linestream >> val;
-  //     jiffies += stol(val);            
-  //   }
-  // }
-  // // return jiffies;
-  // for (string v:vals){
-  //   jiffies += stol(v);
-  // } 
   return ActiveJiffies() + IdleJiffies();
 }
 
@@ -174,7 +156,7 @@ vector<string> LinuxParser::CpuUtilization() {
     linestream  >> key; //cpu
     //read them all
     while(linestream >> val){
-      jiffies.push_back(val);
+      jiffies.emplace_back(val);
     }
 
   }
@@ -299,7 +281,7 @@ long LinuxParser::UpTime(int pid) {
     std::getline(stream,line);
     std::istringstream linestream(line);
     while(linestream >>val){
-      vals.push_back(val);
+      vals.emplace_back(val);
     }   
     starttime = stol(vals[21]); // man says 22 for start time, vals idx starts with 0
     

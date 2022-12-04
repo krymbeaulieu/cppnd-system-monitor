@@ -25,9 +25,8 @@ string Process::Ram() { return LinuxParser::Ram(Process::pid_); }
 
 string Process::User() { return LinuxParser::User(Process::pid_); } 
 
-long int Process::UpTime() { return LinuxParser::UpTime(Process::pid_); }
+long int Process::UpTime() { return LinuxParser::UpTime() - LinuxParser::UpTime(Process::pid_); }
 
 bool Process::operator<(Process const& a) const { 
     return CpuUtilization() < a.CpuUtilization();
     }
-    //return Process::ram_ < a.ram_; }

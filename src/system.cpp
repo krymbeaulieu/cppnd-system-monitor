@@ -24,7 +24,7 @@ vector<Process>& System::Processes() {
     // clear so no appending forever 
     processes_.clear();
     for(int pid : LinuxParser::Pids()) {
-        processes_.push_back(Process(pid));
+        processes_.push_back(pid);
     }
     std::sort(processes_.begin(),processes_.end(),compareProcesses);
     return processes_; 
